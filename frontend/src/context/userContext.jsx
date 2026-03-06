@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
             const token = localStorage.getItem("accessToken")
             if (token) {
                 try {
-                    const res = await axios.get("http://localhost:8000/user/get-user", {
+                    const res = await axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/user/get-user`, {
                         headers: { Authorization: `Bearer ${token}` }
                     })
                     if (res.data.success) {

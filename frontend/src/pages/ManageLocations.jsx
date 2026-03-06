@@ -31,7 +31,7 @@ const ManageLocations = () => {
   const fetchLocations = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get('http://localhost:8000/location/all');
+      const res = await axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`);
       if (res.data.success) {
         setLocations(res.data.data);
       }
@@ -53,11 +53,11 @@ const ManageLocations = () => {
       setIsLoading(true);
       let res;
       if (editingLocation) {
-        res = await axios.put(`http://localhost:8000/location/update/${editingLocation._id}`, formData, {
+        res = await axios.put(`https://ksrtc-bus-search-booking-system.onrender.com/location/update/${editingLocation._id}`, formData, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
       } else {
-        res = await axios.post('http://localhost:8000/location/add', formData, {
+        res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/location/add`, formData, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
       }
@@ -80,7 +80,7 @@ const ManageLocations = () => {
     if (!window.confirm("Are you sure you want to delete this location?")) return;
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const res = await axios.delete(`http://localhost:8000/location/delete/${id}`, {
+      const res = await axios.delete(`https://ksrtc-bus-search-booking-system.onrender.com/location/delete/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (res.data.success) {

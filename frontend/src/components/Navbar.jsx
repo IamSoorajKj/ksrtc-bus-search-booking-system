@@ -40,7 +40,7 @@ const Navbar = () => {
         setIsLoggingOut(true)
         setMobileOpen(false)
         try {
-            await axios.post(`http://localhost:8000/user/logout`, {}, {
+            await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/logout`, {}, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             })
         } catch (_) { /* proceed anyway */ }

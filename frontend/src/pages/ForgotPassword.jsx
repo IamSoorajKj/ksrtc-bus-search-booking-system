@@ -16,7 +16,7 @@ const ForgotPassword = () => {
         setError('');
         try {
             setIsLoading(true);
-            const res = await axios.post('http://localhost:8000/user/forgot-password', { email });
+            const res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/forgot-password`, { email });
             if (res.data.success) {
                 toast.success('OTP sent to your email!');
                 navigate(`/verify-otp/${email}`);

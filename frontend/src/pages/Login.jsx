@@ -28,7 +28,7 @@ const Login = () => {
         setError("")
         try {
             setIsLoading(true)
-            const res = await axios.post(`http://localhost:8000/user/login`, formData, {
+            const res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/login`, formData, {
                 headers: { "Content-Type": "application/json" }
             })
             if (res.data.success) {

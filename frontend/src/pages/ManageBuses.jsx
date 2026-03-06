@@ -45,8 +45,8 @@ const ManageBuses = () => {
     try {
       setIsLoading(true);
       const [busesRes, locsRes] = await Promise.all([
-        axios.get('http://localhost:8000/bus/all'),
-        axios.get('http://localhost:8000/location/all')
+        axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/bus/all`),
+        axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`)
       ]);
       if (busesRes.data.success) setBuses(busesRes.data.data);
       if (locsRes.data.success) setLocations(locsRes.data.data);
@@ -88,11 +88,11 @@ const ManageBuses = () => {
       setIsLoading(true);
       let res;
       if (editingBus) {
-        res = await axios.put(`http://localhost:8000/bus/update/${editingBus._id}`, formData, {
+        res = await axios.put(`https://ksrtc-bus-search-booking-system.onrender.com/bus/update/${editingBus._id}`, formData, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
       } else {
-        res = await axios.post('http://localhost:8000/bus/add', formData, {
+        res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/bus/add`, formData, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
       }
@@ -114,7 +114,7 @@ const ManageBuses = () => {
     if (!window.confirm("Delete this bus?")) return;
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const res = await axios.delete(`http://localhost:8000/bus/delete/${id}`, {
+      const res = await axios.delete(`https://ksrtc-bus-search-booking-system.onrender.com/bus/delete/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (res.data.success) {

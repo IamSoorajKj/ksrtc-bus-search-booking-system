@@ -27,7 +27,7 @@ const Profile = () => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-        const res = await axios.get('http://localhost:8000/booking/my-bookings', {
+        const res = await axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/booking/my-bookings`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

@@ -28,7 +28,7 @@ const ChangePassword = () => {
         if (newPassword.length < 8) { setError('Password must be at least 8 characters'); return; }
         try {
             setIsLoading(true);
-            const res = await axios.post(`http://localhost:8000/user/change-password/${email}`, { newPassword, confirmPassword });
+            const res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/change-password/${email}`, { newPassword, confirmPassword });
             if (res.data.success || res.status === 200) {
                 setSuccess(true);
                 setTimeout(() => navigate('/login'), 2200);

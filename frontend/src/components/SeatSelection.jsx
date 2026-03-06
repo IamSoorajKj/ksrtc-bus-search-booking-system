@@ -97,7 +97,7 @@ const SeatSelection = ({ bus, travelDate, onSelect }) => {
   useEffect(() => {
     if (!bus._id || !travelDate) return;
     setLoadingSeats(true);
-    axios.get(`http://localhost:8000/booking/booked-seats?busId=${bus._id}&date=${travelDate}`)
+    axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/booking/booked-seats?busId=${bus._id}&date=${travelDate}`)
       .then(res => { if (res.data.success) setBookedSeats(res.data.data); })
       .catch(() => { })
       .finally(() => setLoadingSeats(false));

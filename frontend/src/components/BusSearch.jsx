@@ -29,7 +29,7 @@ const BusSearch = memo(() => {
   const minDate = useMemo(() => new Date().toISOString().split('T')[0], []);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/location/all')
+    axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`)
       .then(res => { if (res.data.success) setLocations(res.data.data); })
       .catch(() => { });
   }, []);

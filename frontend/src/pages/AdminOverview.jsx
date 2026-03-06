@@ -16,8 +16,8 @@ const AdminOverview = () => {
     const fetchData = async () => {
       try {
         const [busesRes, locsRes] = await Promise.all([
-          axios.get('http://localhost:8000/bus/all'),
-          axios.get('http://localhost:8000/location/all')
+          axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/bus/all`),
+          axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`)
         ]);
         setStats({
           buses: busesRes.data.data?.length || 0,

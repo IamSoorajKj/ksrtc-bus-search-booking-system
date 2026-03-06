@@ -24,7 +24,7 @@ const Signup = () => {
         e.preventDefault()
         try {
             setIsLoading(true)
-            const res = await axios.post(`http://localhost:8000/user/register`, formData, {
+            const res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/register`, formData, {
                 headers: { "Content-Type": "application/json" }
             })
             if (res.data.success) {
