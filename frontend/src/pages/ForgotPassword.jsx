@@ -1,14 +1,17 @@
 import { API_URL } from '../config';
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { Loader2, Mail, ArrowLeft, Send, CheckCircle2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Loader2, AlertCircle, BusFront, ArrowRight, ArrowLeft } from 'lucide-react'
+import { toast } from 'sonner'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const ForgotPassword = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState('');
-    const [sent, setSent] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -23,85 +26,106 @@ const ForgotPassword = () => {
                 navigate(`/verify-otp/${email}`);
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Something went wrong. Try again.');
+            const errorMsg = err.response?.data?.message || 'Something went wrong. Try again.';
+            setError(errorMsg);
+            toast.error(errorMsg);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-background">
+        <div className="min-h-screen grid lg:grid-cols-2">
+            {/* Left Panel - Same as Login */}
+            <div className="hidden lg:flex flex-col justify-between p-12 text-white relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #1a6e3c 0%, #0f4525 55%, #071a0b 100%)' }}>
+                <div className="absolute inset-0 opacity-10"
+                    style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
 
-            <div className="w-full max-w-md relative z-10">
+                <div className="flex items-center gap-2.5 relative z-10">
+                    <div className="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center">
+                        <BusFront className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                        <div className="font-heading font-bold text-xl leading-tight">KSRTC</div>
+                        <div className="text-xs text-white/70 uppercase tracking-wider">Kerala</div>
+                    </div>
+                </div>
 
-                {/* Back */}
-                <Link to="/login" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mb-6 group">
-                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                    Back to Login
-                </Link>
+                <div className="relative z-10 space-y-4">
+                    <div className="text-5xl font-heading font-extrabold leading-tight">
+                        Account<br />Recovery
+                    </div>
+                    <p className="text-white/75 text-base max-w-xs leading-relaxed">
+                        Don't worry, it happens. Enter your email to receive a secure OTP for password reset.
+                    </p>
+                </div>
 
-                {/* Card */}
-                <div className="bg-white rounded-3xl shadow-xl border border-border overflow-hidden">
+                <p className="text-white/40 text-xs relative z-10">© {new Date().getFullYear()} Kerala State Road Transport Corporation</p>
+            </div>
 
+            {/* Right Panel - Form */}
+            <div className="flex items-center justify-center px-6 py-12 bg-background">
+                <div className="w-full max-w-sm space-y-7 animate-in fade-in slide-in-from-bottom-6 duration-700">
 
-                    <div className="p-8">
-                        {/* Icon */}
-                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto"
-                            style={{ background: 'linear-gradient(135deg, #1a6e3c, #16a34a)' }}>
-                            <Mail className="w-8 h-8 text-white" />
+                    {/* Back Link */}
+                    <Link to="/login" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group">
+                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                        Back to Login
+                    </Link>
+
+                    {/* Branding */}
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center shadow-inner">
+                            <BusFront className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                            <div className="font-heading font-extrabold text-lg text-foreground tracking-tight">KSRTC Kerala</div>
+                            <div className="h-0.5 w-full bg-primary rounded-full mt-0.5" />
+                        </div>
+                    </div>
+
+                    <div className="space-y-1">
+                        <h1 className="font-heading font-bold text-3xl text-foreground">Forgot Password?</h1>
+                        <p className="text-muted-foreground text-sm">Recover your KSRTC account</p>
+                    </div>
+
+                    {error && (
+                        <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-700 animate-in fade-in">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{error}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div className="space-y-1.5">
+                            <Label htmlFor="email" className="font-medium text-foreground">Email Address</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                className="glass-input h-11"
+                                placeholder="Enter your registered email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                required
+                                disabled={isLoading}
+                            />
                         </div>
 
-                        <h1 className="font-heading font-black text-2xl text-center text-foreground mb-1">Forgot Password?</h1>
-                        <p className="text-sm text-muted-foreground text-center mb-7">
-                            Enter your email and we'll send you an OTP to reset your password.
-                        </p>
+                        <Button type="submit"
+                            className="w-full h-11 font-semibold bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all"
+                            disabled={isLoading || !email}>
+                            {isLoading ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Sending OTP...</>
+                            ) : (
+                                <><span>Send OTP</span><ArrowRight className="ml-2 h-4 w-4" /></>
+                            )}
+                        </Button>
+                    </form>
 
-                        {/* Error */}
-                        {error && (
-                            <div className="mb-5 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
-                                {error}
-                            </div>
-                        )}
-
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="relative">
-                                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-muted-foreground" />
-                                <input
-                                    type="email"
-                                    placeholder="your@email.com"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    required
-                                    disabled={isLoading}
-                                    className="w-full h-12 pl-10 pr-4 rounded-xl border border-border bg-muted/30 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all disabled:opacity-50"
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={isLoading || !email}
-                                className="w-full h-12 rounded-xl font-semibold text-white text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98]"
-                                style={{ background: isLoading ? '#166534' : 'linear-gradient(135deg, #16a34a, #1a6e3c)' }}
-                            >
-                                {isLoading ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 animate-spin" />
-                                        Sending OTP…
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send className="w-4 h-4" />
-                                        Send OTP
-                                    </>
-                                )}
-                            </button>
-                        </form>
-
-                        <p className="text-xs text-center text-muted-foreground mt-6">
-                            Remember your password?{' '}
-                            <Link to="/login" className="text-primary font-semibold hover:underline">Sign in</Link>
-                        </p>
-                    </div>
+                    <p className="text-center text-sm text-muted-foreground">
+                        Remembered your password?{" "}
+                        <Link to="/login" className="text-primary font-semibold hover:underline">Sign in</Link>
+                    </p>
                 </div>
             </div>
         </div>
