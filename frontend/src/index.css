@@ -415,4 +415,15 @@
     opacity: 0;
     z-index: 10;
   }
+
+  /* Hide native mm/dd/yyyy placeholder fields in Chrome/Webkit */
+  .date-input-left.text-transparent::-webkit-datetime-edit-fields-wrapper {
+    visibility: hidden;
+  }
+
+  /* Ensure visibility if it was forced hidden but has a value or focus */
+  .date-input-left:focus::-webkit-datetime-edit-fields-wrapper,
+  .date-input-left:not(.text-transparent)::-webkit-datetime-edit-fields-wrapper {
+    visibility: visible;
+  }
 }
