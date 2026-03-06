@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Poppins", sans-serif;
+
+  /* ==== KEYFRAMES ==== */
+  @keyframes bus-drive {
+    0% {
+      transform: translateX(-160px);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    90% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(calc(100vw + 160px));
+      opacity: 0;
+    }
+  }
+
+  @keyframes wheel-spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes road-line {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-120px);
+    }
+  }
+
+  @keyframes float-y {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -400px 0;
+    }
+
+    100% {
+      background-position: 400px 0;
+    }
+  }
+
+  --animate-bus-drive: bus-drive 9s linear infinite;
+  --animate-wheel-spin: wheel-spin 0.6s linear infinite;
+  --animate-road-line: road-line 1.2s linear infinite;
+  --animate-float-y: float-y 4s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.7s ease forwards;
+  --animate-pulse-ring: pulse-ring 1.8s ease-out infinite;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* ===== KSRTC Kerala – Forest Green Theme ===== */
+  --background: #f8faf8;
+  --foreground: #0f1f10;
+
+  --card: #ffffff;
+  --card-foreground: #0f1f10;
+
+  --popover: #ffffff;
+  --popover-foreground: #0f1f10;
+
+  /* Deep Kerala Green */
+  --primary: #1a6e3c;
+  --primary-foreground: #ffffff;
+
+  --secondary: #edf7f0;
+  --secondary-foreground: #145530;
+
+  --muted: #f0f5f1;
+  --muted-foreground: #5a7560;
+
+  /* Gold / Amber accent */
+  --accent: #e8a020;
+  --accent-foreground: #1a1a1a;
+
+  --destructive: #dc3545;
+  --border: #d8e8da;
+  --input: #d8e8da;
+  --ring: #1a6e3c;
+
+  /* Sidebar — very dark green */
+  --sidebar: #071a0b;
+  --sidebar-foreground: #e8f5eb;
+  --sidebar-primary: #e8a020;
+  --sidebar-primary-foreground: #1a1a1a;
+  --sidebar-accent: #0f2e14;
+  --sidebar-accent-foreground: #e8f5eb;
+  --sidebar-border: #122018;
+  --sidebar-ring: #e8a020;
+}
+
+.dark {
+  --background: #060f07;
+  --foreground: #e8f5eb;
+  --card: #0c1e0e;
+  --card-foreground: #e8f5eb;
+  --popover: #0c1e0e;
+  --popover-foreground: #e8f5eb;
+  --primary: #2a9d56;
+  --primary-foreground: #ffffff;
+  --secondary: #122018;
+  --secondary-foreground: #e8f5eb;
+  --muted: #122018;
+  --muted-foreground: #7aaa82;
+  --accent: #e8a020;
+  --accent-foreground: #1a1a1a;
+  --destructive: #dc3545;
+  --border: #1a3020;
+  --input: #1a3020;
+  --ring: #2a9d56;
+  --sidebar: #040d05;
+  --sidebar-foreground: #e8f5eb;
+  --sidebar-primary: #e8a020;
+  --sidebar-primary-foreground: #1a1a1a;
+  --sidebar-accent: #0c1e0e;
+  --sidebar-accent-foreground: #e8f5eb;
+  --sidebar-border: #142018;
+  --sidebar-ring: #e8a020;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+}
+
+@utility gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@layer utilities {
+
+  .dark .glass {
+    background: rgba(12, 30, 14, 0.82);
+    border-color: rgba(255, 255, 255, 0.07);
+  }
+
+  .dark .glass-card {
+    background: rgba(12, 30, 14, 0.78);
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-input {
+    @apply bg-white/80 dark:bg-white/5 border-border focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all duration-200;
+  }
+
+  /* ===== Gradients ===== */
+  .ksrtc-gradient {
+    background: linear-gradient(135deg, #1a6e3c 0%, #0f4525 100%);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(160deg, #1a6e3c 0%, #0f4525 55%, #071a0b 100%);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #e8a020 0%, #c87d10 100%);
+  }
+
+  /* ===== Text gradients ===== */
+  .text-gradient {
+    background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-green {
+    background: linear-gradient(135deg, #1a6e3c, #e8a020);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ===== Badges ===== */
+  .ksrtc-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold;
+    background: rgba(26, 110, 60, 0.1);
+    color: #1a6e3c;
+    border: 1px solid rgba(26, 110, 60, 0.22);
+  }
+
+  .gold-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold;
+    background: rgba(232, 160, 32, 0.12);
+    color: #8a5a00;
+    border: 1px solid rgba(232, 160, 32, 0.3);
+  }
+
+  /* ===== Cards ===== */
+  .feature-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border-radius: 1rem;
+    @apply p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* ===== Bus animation ===== */
+  .bus-container {
+    animation: bus-drive 9s linear infinite;
+    will-change: transform;
+  }
+
+  .wheel-anim {
+    animation: wheel-spin 0.6s linear infinite;
+  }
+
+  .road-dashes {
+    animation: road-line 1.2s linear infinite;
+  }
+
+  /* ===== Utility animations ===== */
+  .float-anim {
+    animation: float-y 4s ease-in-out infinite;
+  }
+
+  .fade-up {
+    animation: fade-up 0.7s ease forwards;
+  }
+
+  .fade-up-1 {
+    animation: fade-up 0.7s ease 0.1s both;
+  }
+
+  .fade-up-2 {
+    animation: fade-up 0.7s ease 0.25s both;
+  }
+
+  .fade-up-3 {
+    animation: fade-up 0.7s ease 0.4s both;
+  }
+
+  .fade-up-4 {
+    animation: fade-up 0.7s ease 0.55s both;
+  }
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(26, 110, 60, 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 110, 60, 0.6);
+  }
+
+  /* ===== Shimmer ===== */
+  .shimmer {
+    background: linear-gradient(90deg, #f0f5f1 25%, #e0eee2 50%, #f0f5f1 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Custom date input styling to move internal icon to left */
+  .date-input-left {
+    position: relative;
+    padding-left: 2.5rem !important;
+  }
+
+  /* Modern Webkit browsers */
+  .date-input-left::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0.75rem;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: transparent;
+    z-index: 10;
+  }
+}
