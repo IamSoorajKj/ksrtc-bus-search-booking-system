@@ -271,8 +271,11 @@ const Profile = () => {
 
           <div className="relative w-full max-w-xl bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="absolute top-4 right-4 z-10 print:hidden">
-              <button onClick={() => setShowModal(false)} className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors">
+            <div className="absolute top-4 right-4 z-[60] print:hidden">
+              <button
+                onClick={(e) => { e.stopPropagation(); setShowModal(false); }}
+                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md shadow-lg border border-white/40 flex items-center justify-center text-white hover:bg-white/30 transition-all active:scale-90"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>

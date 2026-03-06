@@ -209,7 +209,7 @@ const BusSearch = memo(() => {
                   min={minDate}
                 />
                 {!date && (
-                  <div className="absolute left-10 top-1/2 -translate-y-1/2 text-muted-foreground/60 pointer-events-none text-sm font-medium">
+                  <div className="absolute left-10 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none text-base">
                     Select travel date
                   </div>
                 )}
