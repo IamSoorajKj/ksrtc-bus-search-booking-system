@@ -3,7 +3,9 @@ import "dotenv/config"
 
 export const sendBookingMail = async (email, username, booking) => {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS
