@@ -1,16 +1,11 @@
-import nodemailer from "nodemailer"
 import "dotenv/config"
 
 export const sendBookingMail = async (email, username, booking) => {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS
-    }
-  });
+  const apiKey = process.env.BREVO_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("BREVO_API_KEY is missing in environment variables");
+  }
 
   const busDetails = booking.busId ? `${booking.busId.busNumber} (${booking.busId.busType})` : "your bus";
 
@@ -36,12 +31,31 @@ export const sendBookingMail = async (email, username, booking) => {
         </div>
     `;
 
-  const mailOptions = {
-    from: process.env.MAIL_USER,
-    to: email,
+  const payload = {
+    sender: { email: process.env.MAIL_USER || 'noreply@ksrtc.com', name: "KSRTC Bus Booking" },
+    to: [{ email: email }],
     subject: 'Your Ticket is Confirmed! 🚍',
-    html: htmlContent
+    htmlContent: htmlContent
   };
 
-  await transporter.sendMail(mailOptions);
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'api-key': apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error("Brevo API Error:", error);
+      throw new Error("Failed to send booking email via Brevo API");
+    }
+  } catch (error) {
+    console.error("Email send failed:", error);
+    throw error;
+  }
 };
