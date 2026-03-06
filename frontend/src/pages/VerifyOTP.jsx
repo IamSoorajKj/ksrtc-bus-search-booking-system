@@ -14,6 +14,7 @@ const VerifyOTP = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
   const inputRefs = useRef([]);
 
@@ -55,15 +56,20 @@ const VerifyOTP = () => {
       setIsLoading(true);
       const res = await axios.post(`${API_URL}/user/verify-otp/${email}`, { otp: code });
       if (res.data.success || res.status === 200) {
-        setSuccess(true);
-        toast.success("OTP Verified Successfully!");
-        setTimeout(() => navigate(`/change-password/${email}`), 1800);
+        setIsProcessing(true);
+        setIsLoading(false);
+        // Synthetic delay for premium feel
+        setTimeout(() => {
+          setIsProcessing(false);
+          setSuccess(true);
+          toast.success("OTP Verified Successfully!");
+          setTimeout(() => navigate(`/change-password/${email}`), 2200);
+        }, 1500);
       }
     } catch (err) {
       const errorMsg = err.response?.data?.message || 'Invalid OTP. Please try again.';
       setError(errorMsg);
       toast.error(errorMsg);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -125,14 +131,28 @@ const VerifyOTP = () => {
             <p className="text-muted-foreground text-sm">Validating for {email}</p>
           </div>
 
-          {success ? (
-            <div className="flex flex-col items-center gap-4 py-6 animate-in zoom-in-95 duration-500">
-              <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center shadow-sm">
-                <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+          {isProcessing ? (
+            <div className="flex flex-col items-center justify-center py-12 space-y-4 animate-in fade-in duration-500">
+              <div className="relative w-16 h-16">
+                <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
+                <div className="absolute inset-0 rounded-full border-4 border-t-primary border-r-transparent border-b-transparent border-l-transparent animate-spin" />
               </div>
-              <div className="text-center">
-                <div className="font-heading font-bold text-xl text-foreground">Verified! ✓</div>
-                <div className="text-sm text-muted-foreground mt-1 text-center">Redirecting to reset password…</div>
+              <div className="text-center space-y-1">
+                <p className="font-heading font-bold text-lg text-foreground">Verifying Security</p>
+                <p className="text-xs text-muted-foreground">Finalizing your access...</p>
+              </div>
+            </div>
+          ) : success ? (
+            <div className="flex flex-col items-center gap-6 py-8 animate-in zoom-in-95 duration-500">
+              <div className="relative">
+                <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 flex items-center justify-center shadow-inner">
+                  <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-4 border-background" />
+              </div>
+              <div className="text-center space-y-2">
+                <div className="font-heading font-extrabold text-2xl text-foreground tracking-tight">Access Verified! ✓</div>
+                <div className="text-sm text-muted-foreground px-4 leading-relaxed">Security check passed. Redirecting you to set your new password…</div>
               </div>
             </div>
           ) : (
@@ -163,7 +183,7 @@ const VerifyOTP = () => {
                       onChange={e => handleChange(i, e.target.value)}
                       onKeyDown={e => handleKeyDown(i, e)}
                       disabled={isLoading || success}
-                      className={`w-full h-12 text-center text-xl font-bold rounded-xl border transition-all focus:outline-none bg-muted/30 ${digit ? 'border-primary ring-2 ring-primary/10 text-primary' : 'border-border text-foreground'
+                      className={`w-full h-12 text-center text-xl font-bold rounded-xl border-2 transition-all focus:outline-none bg-muted/30 ${digit ? 'border-primary ring-2 ring-primary/10 text-primary' : 'border-border/80 text-foreground'
                         } ${error ? 'border-red-400' : ''} disabled:opacity-50`}
                     />
                   ))}

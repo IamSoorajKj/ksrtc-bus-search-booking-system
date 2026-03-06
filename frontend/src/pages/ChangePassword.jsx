@@ -17,6 +17,7 @@ const ChangePassword = () => {
     const [showNew, setShowNew] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
 
@@ -37,15 +38,20 @@ const ChangePassword = () => {
             setIsLoading(true);
             const res = await axios.post(`${API_URL}/user/change-password/${email}`, { newPassword, confirmPassword });
             if (res.data.success || res.status === 200) {
-                setSuccess(true);
-                toast.success("Password Updated Successfully!");
-                setTimeout(() => navigate('/login'), 2200);
+                setIsProcessing(true);
+                setIsLoading(false);
+                // Synthetic delay for premium feel
+                setTimeout(() => {
+                    setIsProcessing(false);
+                    setSuccess(true);
+                    toast.success("Password Updated Successfully!");
+                    setTimeout(() => navigate('/login'), 2500);
+                }, 1500);
             }
         } catch (err) {
             const errorMsg = err.response?.data?.message || 'Something went wrong. Try again.';
             setError(errorMsg);
             toast.error(errorMsg);
-        } finally {
             setIsLoading(false);
         }
     };
@@ -99,14 +105,28 @@ const ChangePassword = () => {
                         <p className="text-muted-foreground text-sm">Security update for {email}</p>
                     </div>
 
-                    {success ? (
-                        <div className="flex flex-col items-center gap-4 py-6 animate-in zoom-in-95 duration-500">
-                            <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center shadow-sm">
-                                <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                    {isProcessing ? (
+                        <div className="flex flex-col items-center justify-center py-12 space-y-4 animate-in fade-in duration-500">
+                            <div className="relative w-16 h-16">
+                                <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
+                                <div className="absolute inset-0 rounded-full border-4 border-t-primary border-r-transparent border-b-transparent border-l-transparent animate-spin" />
                             </div>
-                            <div className="text-center">
-                                <div className="font-heading font-bold text-xl text-foreground">Success! 🎉</div>
-                                <div className="text-sm text-muted-foreground mt-1 text-center">Your password has been updated. Redirecting to login…</div>
+                            <div className="text-center space-y-1">
+                                <p className="font-heading font-bold text-lg text-foreground">Updating Password</p>
+                                <p className="text-xs text-muted-foreground">Securing your account...</p>
+                            </div>
+                        </div>
+                    ) : success ? (
+                        <div className="flex flex-col items-center gap-6 py-8 animate-in zoom-in-95 duration-500">
+                            <div className="relative">
+                                <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 flex items-center justify-center shadow-inner">
+                                    <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                                </div>
+                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-4 border-background" />
+                            </div>
+                            <div className="text-center space-y-2">
+                                <div className="font-heading font-extrabold text-2xl text-foreground tracking-tight">Success! 🎉</div>
+                                <div className="text-sm text-muted-foreground px-4 leading-relaxed text-center">Your password has been updated successfully. Redirecting to login…</div>
                             </div>
                         </div>
                     ) : (

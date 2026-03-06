@@ -22,6 +22,15 @@ const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false)
     const [isLoggingOut, setIsLoggingOut] = useState(false)
 
+    React.useEffect(() => {
+        if (isLoggingOut) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => { document.body.style.overflow = 'unset'; };
+    }, [isLoggingOut]);
+
     const handleScroll = (e, targetId) => {
         if (window.location.pathname === '/') {
             e.preventDefault();
