@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Loader2, AlertCircle, BusFront, Eye, EyeOff, Lock, ShieldCheck, CheckCircle2 } from 'lucide-react'
+import { Loader2, AlertCircle, BusFront, Eye, EyeOff, Lock, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react'
 import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
