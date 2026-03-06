@@ -1,17 +1,14 @@
-import "dotenv/config"
+import "dotenv/config";
+import nodemailer from "nodemailer";
 
 export const sendBookingMail = async (email, username, booking) => {
   const apiKey = process.env.BREVO_API_KEY;
-
-  if (!apiKey) {
-    throw new Error("BREVO_API_KEY is missing in environment variables");
-  }
 
   const busDetails = booking.busId ? `${booking.busId.busNumber} (${booking.busId.busType})` : "your bus";
 
   const htmlContent = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
-            <div style="background-color: #ea580c; padding: 20px; text-align: center; color: white;">
+            <div style="background-color: #1a6e3c; padding: 20px; text-align: center; color: white;">
                 <h2 style="margin: 0;">Ticket Confirmation</h2>
             </div>
             <div style="padding: 20px; background-color: #fafafa;">
@@ -31,31 +28,60 @@ export const sendBookingMail = async (email, username, booking) => {
         </div>
     `;
 
-  const payload = {
-    sender: { email: 'aiagentautomationsystem@gmail.com', name: "KSRTC Bus Booking" },
-    to: [{ email: email }],
+  if (apiKey) {
+    const payload = {
+      sender: { email: 'aiagentautomationsystem@gmail.com', name: "KSRTC Department" },
+      to: [{ email: email }],
+      subject: 'Your Ticket is Confirmed! 🚍',
+      htmlContent: htmlContent
+    };
+
+    try {
+      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'api-key': apiKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        console.error("Brevo API Error:", error);
+        throw new Error("Failed to send booking email via Brevo API");
+      }
+      return;
+    } catch (error) {
+      console.error("Brevo Booking Email failed:", error);
+      throw error;
+    }
+  }
+
+  // Fallback to Nodemailer for Local
+  console.log("BREVO_API_KEY missing, using Nodemailer for Booking Mail...");
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
+    }
+  });
+
+  const mailOptions = {
+    from: `"KSRTC Department" <${process.env.MAIL_USER}>`,
+    to: email,
     subject: 'Your Ticket is Confirmed! 🚍',
-    htmlContent: htmlContent
+    html: htmlContent
   };
 
   try {
-    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'api-key': apiKey,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("Brevo API Error:", error);
-      throw new Error("Failed to send booking email via Brevo API");
-    }
+    await transporter.sendMail(mailOptions);
+    console.log("Booking confirmation sent successfully via Nodemailer");
   } catch (error) {
-    console.error("Email send failed:", error);
-    throw error;
+    console.error("Nodemailer booking fallback failed:", error);
+    throw new Error("Failed to send booking email");
   }
 };
