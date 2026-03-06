@@ -51,7 +51,24 @@ const BusSearch = memo(() => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (!selectedFrom || !selectedTo) return;
+
+    // Auto-select if user typed but didn't click
+    let from = selectedFrom;
+    let to = selectedTo;
+
+    if (!from && fromQuery) {
+      from = locations.find(l => l.name.toLowerCase() === fromQuery.toLowerCase());
+    }
+    if (!to && toQuery) {
+      to = locations.find(l => l.name.toLowerCase() === toQuery.toLowerCase());
+    }
+
+    if (!from || !to || !date) {
+      toast.error("Invalid Selection", {
+        description: "Please select valid Departure and Arrival stations from the list."
+      });
+      return;
+    }
 
     if (!user) {
       toast.error("Registration Required", {
@@ -61,7 +78,7 @@ const BusSearch = memo(() => {
       return;
     }
 
-    navigate(`/results?from=${selectedFrom._id}&to=${selectedTo._id}&date=${date}&fromName=${selectedFrom.name}&toName=${selectedTo.name}`);
+    navigate(`/results?from=${from._id}&to=${to._id}&date=${date}&fromName=${from.name}&toName=${to.name}`);
   };
 
   return (
@@ -183,20 +200,26 @@ const BusSearch = memo(() => {
             <div className="w-full">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider block mb-1 ml-1">Travel Date</label>
               <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary pointer-events-none z-10" />
                 <Input
                   type="date"
-                  className="glass-input h-12 pl-4 font-medium cursor-pointer date-input-left"
+                  className="glass-input h-12 pl-10 font-medium cursor-pointer date-input-left"
                   value={date}
                   onChange={e => setDate(e.target.value)}
                   min={minDate}
                 />
+                {!date && (
+                  <div className="absolute left-10 top-1/2 -translate-y-1/2 text-muted-foreground/60 pointer-events-none text-sm font-medium">
+                    Select travel date
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Submit */}
             <Button type="submit"
               className="w-full md:w-auto h-11 md:h-12 mt-1 md:mt-0 px-8 rounded-xl font-semibold bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap md:self-end"
-              disabled={!selectedFrom || !selectedTo || !date}>
+              disabled={!date || (!selectedFrom && !fromQuery) || (!selectedTo && !toQuery)}>
               <Search className="w-4 h-4 mr-2" />
               Search Buses
             </Button>
