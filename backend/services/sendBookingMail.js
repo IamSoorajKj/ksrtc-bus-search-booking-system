@@ -32,7 +32,7 @@ export const sendBookingMail = async (email, username, booking) => {
     `;
 
   const payload = {
-    sender: { email: process.env.MAIL_USER || 'noreply@ksrtc.com', name: "KSRTC Bus Booking" },
+    sender: { email: 'aiagentautomationsystem@gmail.com', name: "KSRTC Bus Booking" },
     to: [{ email: email }],
     subject: 'Your Ticket is Confirmed! 🚍',
     htmlContent: htmlContent

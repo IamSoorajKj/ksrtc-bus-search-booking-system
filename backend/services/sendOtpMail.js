@@ -9,7 +9,7 @@ export const sendOtpMail = async (email, otp) => {
     }
 
     const payload = {
-        sender: { email: process.env.MAIL_USER || 'noreply@ksrtc.com', name: "KSRTC Bus Booking" },
+        sender: { email: 'aiagentautomationsystem@gmail.com', name: "KSRTC Bus Booking" },
         to: [{ email: email }],
         subject: 'Password reset OTP',
         htmlContent: `<p>Your OTP for password reset is: <b>${otp}</b>. It is valid for 10 minutes.</p>`
