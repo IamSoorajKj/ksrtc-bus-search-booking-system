@@ -380,10 +380,10 @@ const Hero = () => {
             50%       { opacity: 0.7; }
           }
           @keyframes busDrive {
-            0%   { transform: translateX(-200px); opacity: 0; }
+            0%   { transform: translate3d(-200px, 0, 0); opacity: 0; }
             6%   { opacity: 1; }
             94%  { opacity: 1; }
-            100% { transform: translateX(calc(100vw + 200px)); opacity: 0; }
+            100% { transform: translate3d(calc(100vw + 200px), 0, 0); opacity: 0; }
           }
           @keyframes cityScroll {
             0%   { transform: translate3d(0, 0, 0); }
@@ -704,7 +704,7 @@ const Hero = () => {
           <div
             className="gpu-accelerated"
             style={{
-              position: 'absolute', bottom: '82px', left: 0, zIndex: 5,
+              position: 'absolute', bottom: '15px', left: 0, zIndex: 5,
               animation: 'busDrive 11s linear infinite',
               willChange: 'transform',
               filter: 'drop-shadow(0 12px 16px rgba(0,0,0,0.45))',
@@ -739,8 +739,8 @@ const Hero = () => {
               <rect x="2" y="58" width="233" height="4" fill="white" opacity="0.2" />
 
               {/* Front Windshield - Large & Curved */}
-              <path d="M185 22 L225 22 Q232 22 232 30 L232 55 L185 55 Z" fill="#0f172a" />
-              <path d="M187 24 L223 24 Q230 24 230 30 L230 53 L187 53 Z" fill="url(#ksrtcWindow)" />
+              <path d="M185 22 L215 22 Q228 22 228 35 L228 55 L185 55 Z" fill="#0f172a" />
+              <path d="M187 24 L213 24 Q226 24 226 35 L226 53 L187 53 Z" fill="url(#ksrtcWindow)" />
 
               {/* Passenger Windows - Classic Rectangular with rounded corners */}
               {[15, 48, 81, 114, 147].map((x, i) => (
@@ -754,7 +754,7 @@ const Hero = () => {
 
               {/* Side Mirror */}
 
-              <rect x="235" y="38" width="4" height="12" rx="1" fill="#222" stroke="#444" strokeWidth="0.5" />
+
 
               {/* Destination board removed to keep the front window clear */}
 

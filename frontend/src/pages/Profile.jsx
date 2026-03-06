@@ -275,7 +275,7 @@ const Profile = () => {
             <div className="absolute top-4 right-4 z-[60] print:hidden">
               <button
                 onClick={(e) => { e.stopPropagation(); setShowModal(false); }}
-                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md shadow-lg border border-white/40 flex items-center justify-center text-white hover:bg-white/30 transition-all active:scale-90"
+                className="w-10 h-10 rounded-full bg-slate-900/60 backdrop-blur-md shadow-xl border border-white/20 flex items-center justify-center text-white hover:bg-slate-900/80 transition-all active:scale-90"
               >
                 <X className="w-5 h-5" />
               </button>
