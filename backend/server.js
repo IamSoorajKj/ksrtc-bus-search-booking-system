@@ -16,7 +16,12 @@ const PORT = process.env.PORT || 8000
 
 app.use(express.json())
 app.use(cors({
-    origin: [process.env.CLIENT_URL, 'http://localhost:5173', 'http://localhost:5174'],
+    origin: [
+        'https://ksrtc-bus-search-booking-system.vercel.app',
+        process.env.CLIENT_URL,
+        'http://localhost:5173',
+        'http://localhost:5174'
+    ],
     credentials: true
 }))
 
