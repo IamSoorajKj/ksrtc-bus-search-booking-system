@@ -16,9 +16,16 @@ const PORT = process.env.PORT || 8000
 
 app.use(express.json())
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    origin: [process.env.CLIENT_URL, 'http://localhost:5173', 'http://localhost:5174'],
     credentials: true
 }))
+
+app.get('/', (req, res) => {
+    res.json({
+        message: "KSRTC Bus Search & Booking System API is running smoothly.",
+        status: "healthy"
+    })
+})
 
 app.use('/user', userRoute)
 app.use('/location', locationRoute)
