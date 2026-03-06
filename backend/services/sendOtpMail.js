@@ -37,7 +37,7 @@ export const sendOtpMail = async (email, otp) => {
     }
 
     // Fallback to Nodemailer for Local Development
-    console.log("BREVO_API_KEY missing, falling back to Nodemailer (Local)...");
+
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -56,7 +56,7 @@ export const sendOtpMail = async (email, otp) => {
 
     try {
         await transporter.sendMail(mailOptions);
-        console.log("OTP sent successfully via Nodemailer fallback");
+
     } catch (error) {
         console.error("Nodemailer fallback failed:", error);
         throw new Error("Failed to send OTP email via fallback");

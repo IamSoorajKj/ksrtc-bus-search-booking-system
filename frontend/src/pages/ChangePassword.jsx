@@ -125,7 +125,7 @@ const ChangePassword = () => {
                                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-4 border-background" />
                             </div>
                             <div className="text-center space-y-2">
-                                <div className="font-heading font-extrabold text-2xl text-foreground tracking-tight">Success! 🎉</div>
+                                <div className="font-heading font-extrabold text-2xl text-foreground tracking-tight">Success! </div>
                                 <div className="text-sm text-muted-foreground px-4 leading-relaxed text-center">Your password has been updated successfully. Redirecting to login…</div>
                             </div>
                         </div>

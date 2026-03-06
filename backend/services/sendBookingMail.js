@@ -60,7 +60,7 @@ export const sendBookingMail = async (email, username, booking) => {
   }
 
   // Fallback to Nodemailer for Local
-  console.log("BREVO_API_KEY missing, using Nodemailer for Booking Mail...");
+
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -79,7 +79,7 @@ export const sendBookingMail = async (email, username, booking) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Booking confirmation sent successfully via Nodemailer");
+
   } catch (error) {
     console.error("Nodemailer booking fallback failed:", error);
     throw new Error("Failed to send booking email");
