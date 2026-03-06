@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -24,7 +25,7 @@ const Signup = () => {
         e.preventDefault()
         try {
             setIsLoading(true)
-            const res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/register`, formData, {
+            const res = await axios.post(`${API_URL}/user/register`, formData, {
                 headers: { "Content-Type": "application/json" }
             })
             if (res.data.success) {

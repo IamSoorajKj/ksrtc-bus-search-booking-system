@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
@@ -97,7 +98,7 @@ const SeatSelection = ({ bus, travelDate, onSelect }) => {
   useEffect(() => {
     if (!bus._id || !travelDate) return;
     setLoadingSeats(true);
-    axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/booking/booked-seats?busId=${bus._id}&date=${travelDate}`)
+    axios.get(`${API_URL}/booking/booked-seats?busId=${bus._id}&date=${travelDate}`)
       .then(res => { if (res.data.success) setBookedSeats(res.data.data); })
       .catch(() => { })
       .finally(() => setLoadingSeats(false));

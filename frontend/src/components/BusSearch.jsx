@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useState, useEffect, useMemo, memo } from 'react';
 import { Search, MapPin, Calendar, ArrowRight, Loader2, ArrowLeftRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,7 +30,7 @@ const BusSearch = memo(() => {
   const minDate = useMemo(() => new Date().toISOString().split('T')[0], []);
 
   useEffect(() => {
-    axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`)
+    axios.get(`${API_URL}/location/all`)
       .then(res => { if (res.data.success) setLocations(res.data.data); })
       .catch(() => { });
   }, []);
@@ -203,7 +204,7 @@ const BusSearch = memo(() => {
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary pointer-events-none z-10" />
                 <Input
                   type="date"
-                  className="glass-input h-12 pl-10 font-medium cursor-pointer date-input-left"
+                  className={`glass-input h-12 pl-10 font-medium cursor-pointer date-input-left ${!date ? 'text-transparent' : ''}`}
                   value={date}
                   onChange={e => setDate(e.target.value)}
                   min={minDate}

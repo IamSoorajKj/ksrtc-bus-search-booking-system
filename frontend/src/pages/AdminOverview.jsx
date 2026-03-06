@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import { Bus, MapPin, Users, TrendingUp, ArrowUpRight, Activity, Clock } from 'lucide-react';
 import axios from 'axios';
@@ -16,8 +17,8 @@ const AdminOverview = () => {
     const fetchData = async () => {
       try {
         const [busesRes, locsRes] = await Promise.all([
-          axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/bus/all`),
-          axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`)
+          axios.get(`${API_URL}/bus/all`),
+          axios.get(`${API_URL}/location/all`)
         ]);
         setStats({
           buses: busesRes.data.data?.length || 0,

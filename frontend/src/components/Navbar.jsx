@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import { LayoutDashboard, LogOut, Menu, User, X, BusFront, Loader2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -40,7 +41,7 @@ const Navbar = () => {
         setIsLoggingOut(true)
         setMobileOpen(false)
         try {
-            await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/logout`, {}, {
+            await axios.post(`${API_URL}/user/logout`, {}, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             })
         } catch (_) { /* proceed anyway */ }

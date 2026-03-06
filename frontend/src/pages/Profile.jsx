@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BusFront, Calendar, CheckCircle, Clock, MapPin, Loader2, XCircle, User, Award, QrCode, ShieldCheck, Download, Printer, X, Info } from 'lucide-react';
@@ -27,7 +28,7 @@ const Profile = () => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-        const res = await axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/booking/my-bookings`, {
+        const res = await axios.get(`${API_URL}/booking/my-bookings`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

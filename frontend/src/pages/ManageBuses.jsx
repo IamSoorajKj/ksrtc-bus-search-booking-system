@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useState, useEffect } from 'react';
 import { Plus, Search, Edit2, Trash2, Bus, Loader2, Clock, MapPin, Calendar, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -45,8 +46,8 @@ const ManageBuses = () => {
     try {
       setIsLoading(true);
       const [busesRes, locsRes] = await Promise.all([
-        axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/bus/all`),
-        axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/location/all`)
+        axios.get(`${API_URL}/bus/all`),
+        axios.get(`${API_URL}/location/all`)
       ]);
       if (busesRes.data.success) setBuses(busesRes.data.data);
       if (locsRes.data.success) setLocations(locsRes.data.data);
@@ -88,11 +89,11 @@ const ManageBuses = () => {
       setIsLoading(true);
       let res;
       if (editingBus) {
-        res = await axios.put(`https://ksrtc-bus-search-booking-system.onrender.com/bus/update/${editingBus._id}`, formData, {
+        res = await axios.put(`${API_URL}/bus/update/${editingBus._id}`, formData, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
       } else {
-        res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/bus/add`, formData, {
+        res = await axios.post(`${API_URL}/bus/add`, formData, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
       }
@@ -114,7 +115,7 @@ const ManageBuses = () => {
     if (!window.confirm("Delete this bus?")) return;
     const accessToken = localStorage.getItem("accessToken");
     try {
-      const res = await axios.delete(`https://ksrtc-bus-search-booking-system.onrender.com/bus/delete/${id}`, {
+      const res = await axios.delete(`${API_URL}/bus/delete/${id}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (res.data.success) {

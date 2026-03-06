@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -12,7 +13,7 @@ export const UserProvider = ({ children }) => {
             const token = localStorage.getItem("accessToken")
             if (token) {
                 try {
-                    const res = await axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/user/get-user`, {
+                    const res = await axios.get(`${API_URL}/user/get-user`, {
                         headers: { Authorization: `Bearer ${token}` }
                     })
                     if (res.data.success) {

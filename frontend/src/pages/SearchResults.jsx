@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -133,7 +134,7 @@ const SearchResults = () => {
     }
     if (fromId && toId && date) {
       setIsLoading(true);
-      axios.get(`https://ksrtc-bus-search-booking-system.onrender.com/bus/search?from=${fromId}&to=${toId}&date=${date}`, {
+      axios.get(`${API_URL}/bus/search?from=${fromId}&to=${toId}&date=${date}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => { if (res.data.success) setBuses(res.data.data); })
@@ -158,7 +159,7 @@ const SearchResults = () => {
       setPaymentStatus('loading');
       const totalAmount = seats.reduce((sum, s) => sum + s.price, 0);
       const seatIds = seats.map(s => s.id).join(', ');
-      const orderRes = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/payment/createOrder`, {
+      const orderRes = await axios.post(`${API_URL}/payment/createOrder`, {
         amount: totalAmount,
         seats: seatIds,
         busId: bus._id,
@@ -189,7 +190,7 @@ const SearchResults = () => {
           // ── Payment successful in Razorpay ──
           setPaymentStatus('verifying');
           try {
-            const verifyRes = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/payment/verifyPayment`, {
+            const verifyRes = await axios.post(`${API_URL}/payment/verifyPayment`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature

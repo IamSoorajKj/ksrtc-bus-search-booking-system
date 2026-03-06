@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -48,7 +49,7 @@ const VerifyOTP = () => {
     setError('');
     try {
       setIsLoading(true);
-      const res = await axios.post(`https://ksrtc-bus-search-booking-system.onrender.com/user/verify-otp/${email}`, { otp: code });
+      const res = await axios.post(`${API_URL}/user/verify-otp/${email}`, { otp: code });
       if (res.data.success || res.status === 200) {
         setSuccess(true);
         setTimeout(() => navigate(`/change-password/${email}`), 1800);
